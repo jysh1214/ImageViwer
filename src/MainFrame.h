@@ -8,8 +8,11 @@
 class MainFrame: public wxFrame
 {
 public:
-    MainFrame(const wxChar* title, const int ID);
+    MainFrame(const wxString title, const int ID);
     virtual ~MainFrame();
+
+    void OnOpenFile(wxCommandEvent& event);
+    void OnExit(wxCommandEvent& event);
 
 private:
     MainMenuBar* m_menuBar = nullptr;

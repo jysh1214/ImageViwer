@@ -1,10 +1,11 @@
-SET(SRCS Main.cpp
+SET(SRCS ImageViwer.cpp
     MainFrame.cpp
 	MainMenuBar.cpp)
 	
-SET(HEADERS Main.h
+SET(HEADERS ImageViwer.h
     MainFrame.h
-	MainMenuBar.h)
+	MainMenuBar.h
+	"${PROJECT_SOURCE_DIR}/include/Config.h")
 
 SET(INCS ${wxWidgets_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/lib)
 SET(LIBS ${wxWidgets_LIBRARIES})

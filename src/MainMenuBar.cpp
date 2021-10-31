@@ -1,23 +1,31 @@
 #include "MainMenuBar.h"
 
-wxDEFINE_EVENT(wxEVT_WAIT_COMMAND, wxCommandEvent);
-
-enum
-{
-    OPEN_FILE_MENU = 1,
-};
-
-BEGIN_EVENT_TABLE(MainMenuBar, wxMenuBar)
-END_EVENT_TABLE()
+#include <iostream>
 
 MainMenuBar::MainMenuBar(): wxMenuBar()
 {
-	// File menu.
+	// File
 	m_fileMenu = new wxMenu();
-	m_fileMenu->Append(wxID_OPEN, "Open file", "Open file");
+	// Open File
+	m_fileMenu->Append(OPEN_FILE, "Open file", "Open file");
+	m_fileMenu->Connect(OPEN_FILE, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)(&MainMenuBar::OnOpenFile));
+	// Exit
+	m_fileMenu->Append(EXIT, "Exit", "Exit");
+	m_fileMenu->Connect(EXIT, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)(&MainMenuBar::OnExit));
+	
 
 	// Append to main menu.
 	this->Append(m_fileMenu, "File");
 }
 
 MainMenuBar::~MainMenuBar() {}
+
+void MainMenuBar::OnOpenFile(wxCommandEvent& event)
+{
+	event.Skip();
+}
+
+void MainMenuBar::OnExit(wxCommandEvent& event)
+{
+	event.Skip();
+}

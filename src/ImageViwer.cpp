@@ -1,7 +1,7 @@
 #include <wx/app.h>
 
+#include "Config.h"
 #include "ImageViwer.h"
-#include "Main.h"
 #include "MainFrame.h"
 
 wxIMPLEMENT_APP(ImageViwer);
@@ -12,7 +12,7 @@ bool ImageViwer::OnInit()
         return false;
     }
 
-    MainFrame* frame = new MainFrame(wxT("FUCK"), MAIN_FRAME_ID);
+    MainFrame* frame = new MainFrame("FUCK", MAIN_FRAME);
     frame->Show(true);
     SetTopWindow(frame);
 
