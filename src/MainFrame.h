@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 
 #include "MainMenuBar.h"
+#include "CanvasWindow.h"
 
 class MainFrame: public wxFrame
 {
@@ -16,6 +17,7 @@ public:
 
 private:
     MainMenuBar* m_menuBar = nullptr;
+    CanvasWindow* m_canvas = nullptr;
 };
 
 #endif

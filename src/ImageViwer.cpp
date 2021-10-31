@@ -12,7 +12,10 @@ bool ImageViwer::OnInit()
         return false;
     }
 
+    wxInitAllImageHandlers();
+
     MainFrame* frame = new MainFrame("FUCK", MAIN_FRAME);
+    frame->Maximize();
     frame->Show(true);
     SetTopWindow(frame);
 

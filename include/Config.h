@@ -4,8 +4,11 @@
 enum
 {
 	MAIN_FRAME,
+	CANVAS_WINDOW,
+	CANVAS_PANEL,
 	OPEN_FILE,
 	EXIT,
+	RENDER,
 };
 
 #endif
