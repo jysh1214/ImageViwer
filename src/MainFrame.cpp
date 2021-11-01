@@ -25,7 +25,9 @@ MainFrame::MainFrame(const wxString title, const int ID)
     this->Connect(EXIT, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)(&MainFrame::OnExit));
 
     // Canvas
-    m_canvas = new CanvasWindow(this, CANVAS_WINDOW);
+    int frameW, frameH;
+    this->GetSize(&frameW, &frameH);
+    m_canvas = new CanvasWindow(this, CANVAS_WINDOW, wxSize(frameW, frameH));
     m_canvas->Show(true);
 
     // Set sizer.
@@ -46,7 +48,6 @@ void MainFrame::OnOpenFile(wxCommandEvent& event)
     }
 
     wxImage in(openFileDialog.GetPath());
-    m_canvas->SetSize(in.GetWidth(), in.GetHeight());
     m_canvas->SetImage(in);
 }
 

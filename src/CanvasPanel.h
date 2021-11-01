@@ -12,7 +12,6 @@ public:
 
 	void SetImage(wxImage& in);
 	void PaintEvent(wxPaintEvent& event);
-	void PaintNow();
 	void Render(wxDC& dc);
 
 private:

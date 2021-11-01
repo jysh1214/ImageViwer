@@ -3,7 +3,7 @@
 
 #include <wx/sizer.h>
 
-CanvasWindow::CanvasWindow(wxWindow* parent, const int ID)
+CanvasWindow::CanvasWindow(wxWindow* parent, const int ID, wxSize size)
     : wxScrolledWindow(parent, ID, wxDefaultPosition, wxDefaultSize)
 {
     int canvasW, camvasH;
@@ -20,5 +20,6 @@ CanvasWindow::~CanvasWindow() {}
 
 void CanvasWindow::SetImage(wxImage& in)
 {
+    SetScrollbars(1, 1, in.GetWidth(), in.GetHeight(), 0, 0);
     m_canvasPanel->SetImage(in);
 }
