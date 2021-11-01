@@ -18,7 +18,7 @@ CanvasWindow::CanvasWindow(wxWindow* parent, const int ID)
 
 CanvasWindow::~CanvasWindow() {}
 
-void CanvasWindow::SetImage(wxImage in)
+void CanvasWindow::SetImage(wxImage& in)
 {
     m_canvasPanel->SetImage(in);
 }

@@ -14,7 +14,7 @@ public:
 	CanvasWindow(wxWindow* parent, const int ID);
 	virtual ~CanvasWindow();
 
-	void SetImage(wxImage in);
+	void SetImage(wxImage& in);
 	void PaintEvent(wxPaintEvent& event);
 
 private:

@@ -10,7 +10,7 @@ public:
 	CanvasPanel(wxWindow* parent, const int ID, wxPoint pos, wxSize size);
 	virtual ~CanvasPanel();
 
-	void SetImage(wxImage in);
+	void SetImage(wxImage& in);
 	void PaintEvent(wxPaintEvent& event);
 	void PaintNow();
 	void Render(wxDC& dc);

@@ -15,7 +15,7 @@ CanvasPanel::CanvasPanel(wxWindow* parent, const int ID, wxPoint pos, wxSize siz
 
 CanvasPanel::~CanvasPanel() {}
 
-void CanvasPanel::SetImage(wxImage in)
+void CanvasPanel::SetImage(wxImage& in)
 {
     m_image = in;
     Refresh();
@@ -24,12 +24,6 @@ void CanvasPanel::SetImage(wxImage in)
 void CanvasPanel::PaintEvent(wxPaintEvent& event)
 {
     wxPaintDC dc(this);
-    this->Render(dc);
-}
-
-void CanvasPanel::PaintNow()
-{
-    wxClientDC dc(this);
     this->Render(dc);
 }
 
