@@ -13,11 +13,12 @@ public:
     virtual ~MainFrame();
 
     void OnOpenFile(wxCommandEvent& event);
-    void OnExit(wxCommandEvent& event);
+    void OnQuit(wxCommandEvent& event);
+    void OnSize(wxSizeEvent& event);
 
 private:
     MainMenuBar* m_menuBar = nullptr;
-    CanvasWindow* m_canvas = nullptr;
+    CanvasWindow* m_canvasWindow = nullptr;
 };
 
 #endif

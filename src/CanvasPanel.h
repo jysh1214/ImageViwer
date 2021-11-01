@@ -3,6 +3,7 @@
 
 #include <wx/panel.h>
 #include <wx/image.h>
+#include <wx/bitmap.h>
 
 class CanvasPanel: public wxPanel
 {
@@ -11,12 +12,13 @@ public:
 	virtual ~CanvasPanel();
 
 	void SetImage(wxImage& in);
-	void PaintEvent(wxPaintEvent& event);
+	void OnPaint(wxPaintEvent& event);
+	void PaintNow();
 	void Render(wxDC& dc);
+	void OnSize(wxSizeEvent& event);
 
 private:
-	wxImage m_image;
-	DECLARE_EVENT_TABLE()
+	wxBitmap m_bitmap;
 };
 
 #endif

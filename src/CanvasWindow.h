@@ -15,7 +15,6 @@ public:
 	virtual ~CanvasWindow();
 
 	void SetImage(wxImage& in);
-	void PaintEvent(wxPaintEvent& event);
 
 private:
 	CanvasPanel* m_canvasPanel = nullptr;

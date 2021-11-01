@@ -18,23 +18,25 @@ MainFrame::MainFrame(const wxString title, const int ID)
 {
     // Make a menubar.
     m_menuBar = new MainMenuBar();
-    SetMenuBar(m_menuBar);
+    this->SetMenuBar(m_menuBar);
 
-    // Menu event.
-    this->Connect(OPEN_FILE, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)(&MainFrame::OnOpenFile));
-    this->Connect(EXIT, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)(&MainFrame::OnExit));
+    // Bind event.
+    this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnOpenFile, this, OPEN_FILE);
+    this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnQuit, this, EXIT);
 
-    // Canvas
+    // Set canvas window.
     int frameW, frameH;
     this->GetSize(&frameW, &frameH);
-    m_canvas = new CanvasWindow(this, CANVAS_WINDOW, wxSize(frameW, frameH));
-    m_canvas->Show(true);
+    m_canvasWindow = new CanvasWindow(this, CANVAS_WINDOW, wxSize(frameW, frameH));
+    m_canvasWindow->Show(true);
 
     // Set sizer.
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
-    mainSizer->Add(m_canvas, 1, wxEXPAND);
+    mainSizer->Add(m_canvasWindow, 1, wxEXPAND);
     this->SetSizer(mainSizer);
     mainSizer->SetSizeHints(this);
+
+    this->Center();
 }
 
 MainFrame::~MainFrame() {}
@@ -48,10 +50,10 @@ void MainFrame::OnOpenFile(wxCommandEvent& event)
     }
 
     wxImage in(openFileDialog.GetPath());
-    m_canvas->SetImage(in);
+    m_canvasWindow->SetImage(in);
 }
 
-void MainFrame::OnExit(wxCommandEvent& event)
+void MainFrame::OnQuit(wxCommandEvent& event)
 {
     Close(true);
 }
