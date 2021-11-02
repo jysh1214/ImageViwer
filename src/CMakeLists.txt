@@ -1,15 +1,19 @@
 SET(SRCS ImageViwer.cpp
+    CanvasPanel.cpp
+    CanvasWindow.cpp
     MainFrame.cpp
-	MainMenuBar.cpp
-	CanvasWindow.cpp
-	CanvasPanel.cpp)
-	
+    MainMenuBar.cpp
+	MainToolBar.cpp
+	ToolBarPanel.cpp)
+    
 SET(HEADERS ImageViwer.h
-    MainFrame.h
-	MainMenuBar.h
+    CanvasPanel.h
 	CanvasWindow.h
-	CanvasPanel.h
-	"${PROJECT_SOURCE_DIR}/include/Config.h")
+    MainFrame.h
+    MainMenuBar.h
+	MainToolBar.h
+	ToolBarPanel.h
+    "${PROJECT_SOURCE_DIR}/include/Config.h")
 
 SET(INCS ${wxWidgets_INCLUDE_DIRS} ${PROJECT_SOURCE_DIR}/lib)
 SET(LIBS ${wxWidgets_LIBRARIES})

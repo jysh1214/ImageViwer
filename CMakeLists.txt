@@ -19,10 +19,10 @@ FIND_PACKAGE(Threads REQUIRED)
 # Find wxWidgets.
 IF(MSVC)
     # Use vcpkg.
-	INCLUDE("C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
-	# Choose windows application instead of console one.
-	SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
-	
+    INCLUDE("C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+    # Choose windows application instead of console one.
+    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+    
 ENDIF()
 
 FIND_PACKAGE(wxWidgets REQUIRED)

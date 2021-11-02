@@ -40,7 +40,6 @@ void CanvasPanel::Render(wxDC& dc)
     dc.GetSize(&newW, &newH);
     int centerX = newW / 2 - m_bitmap.GetWidth() / 2;
     int centerY = newH / 2 - m_bitmap.GetHeight() / 2;
-
     dc.DrawBitmap(m_bitmap, centerX, centerY, false);
 }
 

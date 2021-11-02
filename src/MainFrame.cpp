@@ -20,23 +20,25 @@ MainFrame::MainFrame(const wxString title, const int ID)
     m_menuBar = new MainMenuBar();
     this->SetMenuBar(m_menuBar);
 
-    // Bind event.
-    this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnOpenFile, this, OPEN_FILE);
-    this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnQuit, this, EXIT);
+    // Make a toolbar.
+    m_toolBar = new ToolBarPanel(this, MAIN_TOOL_BAR);
 
-    // Set canvas window.
+    // Make a canvas window.
     int frameW, frameH;
     this->GetSize(&frameW, &frameH);
     m_canvasWindow = new CanvasWindow(this, CANVAS_WINDOW, wxSize(frameW, frameH));
     m_canvasWindow->Show(true);
 
-    // Set sizer.
+    // Layout
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
-    mainSizer->Add(m_canvasWindow, 1, wxEXPAND);
+    mainSizer->Add(m_toolBar, 0, wxEXPAND, 20);
+    mainSizer->Add(m_canvasWindow, 1, wxEXPAND | wxALL);
     this->SetSizer(mainSizer);
     mainSizer->SetSizeHints(this);
 
-    this->Center();
+    // Bind event.
+    this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnOpenFile, this, OPEN_FILE);
+    this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnQuit, this, EXIT);
 }
 
 MainFrame::~MainFrame() {}
@@ -55,5 +57,10 @@ void MainFrame::OnOpenFile(wxCommandEvent& event)
 
 void MainFrame::OnQuit(wxCommandEvent& event)
 {
-    Close(true);
+    this->Close(true);
+}
+
+void MainFrame::OnClose(wxCloseEvent& event)
+{
+    this->Close(true);
 }

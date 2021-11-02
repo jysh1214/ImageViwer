@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 
 #include "MainMenuBar.h"
+#include "ToolBarPanel.h"
 #include "CanvasWindow.h"
 
 class MainFrame: public wxFrame
@@ -14,10 +15,11 @@ public:
 
     void OnOpenFile(wxCommandEvent& event);
     void OnQuit(wxCommandEvent& event);
-    void OnSize(wxSizeEvent& event);
+    void OnClose(wxCloseEvent& event);
 
 private:
     MainMenuBar* m_menuBar = nullptr;
+    ToolBarPanel* m_toolBar = nullptr;
     CanvasWindow* m_canvasWindow = nullptr;
 };
 
