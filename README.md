@@ -13,3 +13,7 @@
 ### Linux
 
 ### MacOs
+
+### Reference
+
+- Layout: https://www.cnblogs.com/tinyms/archive/2010/05/18/wxWidgets_wxBoxSizer.html
