@@ -10,7 +10,8 @@ enum
 	OPEN_FILE,
 	EXIT,
 	RENDER,
-	TOOL_SOBEL,
+	// TOOL
+	SOBEL,
 };
 
 #endif

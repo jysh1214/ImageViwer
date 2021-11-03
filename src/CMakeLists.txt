@@ -3,7 +3,6 @@ SET(SRCS ImageViwer.cpp
     CanvasWindow.cpp
     MainFrame.cpp
     MainMenuBar.cpp
-	MainToolBar.cpp
 	ToolBarPanel.cpp)
     
 SET(HEADERS ImageViwer.h
@@ -11,7 +10,6 @@ SET(HEADERS ImageViwer.h
 	CanvasWindow.h
     MainFrame.h
     MainMenuBar.h
-	MainToolBar.h
 	ToolBarPanel.h
     "${PROJECT_SOURCE_DIR}/include/Config.h")
 

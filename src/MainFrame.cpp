@@ -39,6 +39,8 @@ MainFrame::MainFrame(const wxString title, const int ID)
     // Bind event.
     this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnOpenFile, this, OPEN_FILE);
     this->Bind(wxEVT_COMMAND_MENU_SELECTED, &MainFrame::OnQuit, this, EXIT);
+
+    this->Bind(wxEVT_BUTTON, &MainFrame::Sobel, this, SOBEL);
 }
 
 MainFrame::~MainFrame() {}
@@ -52,7 +54,7 @@ void MainFrame::OnOpenFile(wxCommandEvent& event)
     }
 
     wxImage in(openFileDialog.GetPath());
-    m_canvasWindow->SetImage(in);
+    this->SetImage(in);
 }
 
 void MainFrame::OnQuit(wxCommandEvent& event)
@@ -63,4 +65,14 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 void MainFrame::OnClose(wxCloseEvent& event)
 {
     this->Close(true);
+}
+
+void MainFrame::SetImage(wxImage& in)
+{
+    m_canvasWindow->SetImage(in);
+}
+
+void MainFrame::Sobel(wxCommandEvent& event)
+{
+    m_canvasWindow->Sobel();
 }

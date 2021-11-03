@@ -11,6 +11,8 @@ public:
 	ToolBarPanel(wxWindow* parent, const int ID);
 	virtual ~ToolBarPanel();
 
+	void Sobel(wxCommandEvent& event);
+
 private:
 	wxBoxSizer* m_sizer = nullptr;
 	wxButton* m_sobel = nullptr;

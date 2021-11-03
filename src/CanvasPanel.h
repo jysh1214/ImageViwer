@@ -17,8 +17,10 @@ public:
 	void Render(wxDC& dc);
 	void OnSize(wxSizeEvent& event);
 
+	void Sobel();
+
 private:
-	wxBitmap m_bitmap;
+	wxImage m_image;
 };
 
 #endif

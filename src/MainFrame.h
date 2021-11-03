@@ -17,6 +17,9 @@ public:
     void OnQuit(wxCommandEvent& event);
     void OnClose(wxCloseEvent& event);
 
+    void SetImage(wxImage& in);
+    void Sobel(wxCommandEvent& event);
+
 private:
     MainMenuBar* m_menuBar = nullptr;
     ToolBarPanel* m_toolBar = nullptr;

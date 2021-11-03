@@ -16,7 +16,8 @@ CanvasPanel::~CanvasPanel() {}
 
 void CanvasPanel::SetImage(wxImage& in)
 {
-    m_bitmap = wxBitmap(in);
+    //m_bitmap = wxBitmap(in);
+    m_image = in;
     this->Refresh();
 }
 
@@ -35,15 +36,19 @@ void CanvasPanel::PaintNow()
 void CanvasPanel::Render(wxDC& dc)
 {
     dc.Clear();
-    //this->SetBackgroundColour(wxColour(*wxWHITE));
-    int newW, newH;
-    dc.GetSize(&newW, &newH);
-    int centerX = newW / 2 - m_bitmap.GetWidth() / 2;
-    int centerY = newH / 2 - m_bitmap.GetHeight() / 2;
-    dc.DrawBitmap(m_bitmap, centerX, centerY, false);
+    int w, h;
+    dc.GetSize(&w, &h);
+    int centerX = w / 2 - m_image.GetWidth() / 2;
+    int centerY = h / 2 - m_image.GetHeight() / 2;
+    dc.DrawBitmap(m_image, centerX, centerY, false);
 }
 
 void CanvasPanel::OnSize(wxSizeEvent& event)
 {
-    PaintNow();
+    this->PaintNow();
+}
+
+void CanvasPanel::Sobel()
+{
+
 }

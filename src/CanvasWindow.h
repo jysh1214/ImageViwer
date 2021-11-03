@@ -15,6 +15,7 @@ public:
 	virtual ~CanvasWindow();
 
 	void SetImage(wxImage& in);
+	void Sobel();
 
 private:
 	CanvasPanel* m_canvasPanel = nullptr;

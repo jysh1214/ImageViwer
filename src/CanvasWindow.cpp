@@ -23,3 +23,8 @@ void CanvasWindow::SetImage(wxImage& in)
 {
     m_canvasPanel->SetImage(in);
 }
+
+void CanvasWindow::Sobel()
+{
+    this->m_canvasPanel->Sobel();
+}
