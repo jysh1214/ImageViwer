@@ -10,6 +10,7 @@ enum
 	OPEN_FILE,
 	EXIT,
 	RENDER,
+	SCROLL,
 	// TOOL
 	SOBEL,
 };

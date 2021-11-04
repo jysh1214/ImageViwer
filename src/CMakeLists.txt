@@ -1,13 +1,11 @@
 SET(SRCS ImageViwer.cpp
-    CanvasPanel.cpp
-    CanvasWindow.cpp
+    Canvas.cpp
     MainFrame.cpp
     MainMenuBar.cpp
 	ToolBarPanel.cpp)
     
 SET(HEADERS ImageViwer.h
-    CanvasPanel.h
-	CanvasWindow.h
+    Canvas.h
     MainFrame.h
     MainMenuBar.h
 	ToolBarPanel.h

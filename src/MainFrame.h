@@ -5,7 +5,7 @@
 
 #include "MainMenuBar.h"
 #include "ToolBarPanel.h"
-#include "CanvasWindow.h"
+#include "Canvas.h"
 
 class MainFrame: public wxFrame
 {
@@ -23,7 +23,7 @@ public:
 private:
     MainMenuBar* m_menuBar = nullptr;
     ToolBarPanel* m_toolBar = nullptr;
-    CanvasWindow* m_canvasWindow = nullptr;
+    Canvas* m_canvas = nullptr;
 };
 
 #endif

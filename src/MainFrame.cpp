@@ -26,13 +26,13 @@ MainFrame::MainFrame(const wxString title, const int ID)
     // Make a canvas window.
     int frameW, frameH;
     this->GetSize(&frameW, &frameH);
-    m_canvasWindow = new CanvasWindow(this, CANVAS_WINDOW, wxSize(frameW, frameH));
-    m_canvasWindow->Show(true);
+    m_canvas = new Canvas(this, CANVAS_WINDOW, wxDefaultPosition, wxSize(frameW, frameH));
+    m_canvas->Show(true);
 
     // Layout
     wxBoxSizer* mainSizer = new wxBoxSizer(wxVERTICAL);
     mainSizer->Add(m_toolBar, 0, wxEXPAND, 20);
-    mainSizer->Add(m_canvasWindow, 1, wxEXPAND | wxALL);
+    mainSizer->Add(m_canvas, 1, wxEXPAND | wxALL);
     this->SetSizer(mainSizer);
     mainSizer->SetSizeHints(this);
 
@@ -69,10 +69,10 @@ void MainFrame::OnClose(wxCloseEvent& event)
 
 void MainFrame::SetImage(wxImage& in)
 {
-    m_canvasWindow->SetImage(in);
+    m_canvas->SetImage(in);
 }
 
 void MainFrame::Sobel(wxCommandEvent& event)
 {
-    m_canvasWindow->Sobel();
+    m_canvas->Sobel();
 }

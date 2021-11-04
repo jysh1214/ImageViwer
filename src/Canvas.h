@@ -1,21 +1,22 @@
 #ifndef CANVAS_PANEL_H
 #define CANVAS_PANEL_H
 
-#include <wx/panel.h>
+#include <wx/scrolwin.h>
 #include <wx/image.h>
 #include <wx/bitmap.h>
 
-class CanvasPanel: public wxPanel
+class Canvas: public wxScrolledCanvas
 {
 public:
-	CanvasPanel(wxWindow* parent, const int ID, wxPoint pos, wxSize size);
-	virtual ~CanvasPanel();
+	Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size);
+	virtual ~Canvas();
 
 	void SetImage(wxImage& in);
 	void OnPaint(wxPaintEvent& event);
 	void PaintNow();
 	void Render(wxDC& dc);
 	void OnSize(wxSizeEvent& event);
+	void OnScroll(wxScrollWinEvent& event);
 
 	void Sobel();
 
