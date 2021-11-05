@@ -4,6 +4,8 @@
 #include <wx/scrolwin.h>
 #include <wx/image.h>
 #include <wx/bitmap.h>
+#include <wx/dcmemory.h>
+#include <wx/dcbuffer.h>
 
 class Canvas: public wxScrolledCanvas
 {
@@ -14,7 +16,7 @@ public:
 	void SetImage(wxImage& in);
 	void OnPaint(wxPaintEvent& event);
 	void PaintNow();
-	void Render(wxDC& dc);
+	void OnDraw(wxDC& dc);
 	void OnSize(wxSizeEvent& event);
 	void OnScroll(wxScrollWinEvent& event);
 
@@ -22,6 +24,12 @@ public:
 
 private:
 	wxImage m_image;
+	int m_imageW;
+	int m_imageH;
+	int m_scrollUintX;
+	int m_scrollUintY;
+	int m_currentX;
+	int m_currentY;
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <wx/event.h>
 #include <wx/dcclient.h>
+#include <wx/dcbuffer.h>
 
 // Ref: https://wxwidgets.info/getting_aquainted_with_doc_view_architecture_part_3_en/
 
@@ -21,44 +22,55 @@ Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
     this->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Canvas::OnScroll, this);
 }
 
-Canvas::~Canvas() {}
+Canvas::~Canvas() 
+{
+
+}
 
 void Canvas::SetImage(wxImage& in)
 {
+    m_image = in;
+    m_imageW = m_image.GetWidth();
+    m_imageH = m_image.GetHeight();
+
     // Set scroll bar.
-    this->SetVirtualSize(in.GetWidth(), in.GetHeight());
-    this->SetScrollbars(10, 10, in.GetWidth() / 10, in.GetHeight() / 10);
+    this->SetVirtualSize(m_imageW, m_imageH);
+    this->SetScrollbars(m_imageW / 100, m_imageH / 100, 100, 100);
+    m_scrollUintX = m_imageW / 100;
+    m_scrollUintY = m_imageH / 100;
     this->ShowScrollbars(wxSHOW_SB_DEFAULT, wxSHOW_SB_DEFAULT);
 
-    m_image = in;
     this->Refresh();
+    //Update();
 }
 
 void Canvas::OnPaint(wxPaintEvent& event)
-{
+{   
     wxPaintDC dc(this);
-    //wxBufferedPaintDC  dc(this);
-    this->Render(dc);
+    DoPrepareDC(dc);
+    this->OnDraw(dc);
 }
 
 void Canvas::PaintNow()
 {
-    wxClientDC dc(this);
-    this->Render(dc);
+    wxPaintDC dc(this);
+    DoPrepareDC(dc);
+    this->OnDraw(dc);
 }
 
-void Canvas::Render(wxDC& dc)
+void Canvas::OnDraw(wxDC& dc)
 {
-    dc.Clear();
     int w, h;
     dc.GetSize(&w, &h);
-    if (m_image.GetWidth() > w && m_image.GetHeight() > h) {
-        dc.DrawBitmap(m_image, 0, 0, false);
+    if (m_imageW > w && m_imageH > h) {
+        this->GetViewStart(&m_currentX, &m_currentY);
+        dc.SetDeviceOrigin(-m_currentX * m_scrollUintX, -m_currentY * m_scrollUintY);
+        dc.DrawBitmap(wxBitmap(m_image), 0, 0, false);
     }
     else {
-        int centerX = w / 2 - m_image.GetWidth() / 2;
-        int centerY = h / 2 - m_image.GetHeight() / 2;
-        dc.DrawBitmap(m_image, centerX, centerY, false);
+        int centerX = w / 2 - m_imageW / 2;
+        int centerY = h / 2 - m_imageH / 2;
+        dc.DrawBitmap(wxBitmap(m_image), centerX, centerY, false);
     }
 }
 
@@ -69,8 +81,7 @@ void Canvas::OnSize(wxSizeEvent& event)
 
 void Canvas::OnScroll(wxScrollWinEvent& event)
 {
-    this->AdjustVirtualSize();
-    event.Skip();
+    this->PaintNow();
 }
 
 void Canvas::Sobel()
