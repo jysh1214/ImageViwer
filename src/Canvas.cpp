@@ -7,24 +7,25 @@
 
 // Ref: https://wxwidgets.info/getting_aquainted_with_doc_view_architecture_part_3_en/
 
+// Ref: https://gist.github.com/PBfordev/45bee180f6cbee6c1948a1a9813a2f27
+
 Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
-	: wxScrolledCanvas(parent, ID, pos, size, wxHSCROLL | wxVSCROLL | wxSUNKEN_BORDER | wxFULL_REPAINT_ON_RESIZE)
+	: wxScrolledCanvas(parent, ID, pos, size, wxHSCROLL | wxVSCROLL | wxRETAINED | wxFULL_REPAINT_ON_RESIZE)
 {
     this->EnableScrolling(true, true);
 
     // Bind event.
     this->Bind(wxEVT_PAINT, &Canvas::OnPaint, this);
     this->Bind(wxEVT_SIZE, &Canvas::OnSize, this);
-    // wxEVT_SCROLLBAR is deprecated
-    this->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Canvas::OnScroll, this);
-    this->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Canvas::OnScroll, this);
     this->Bind(wxEVT_SCROLLWIN_LINEUP, &Canvas::OnScroll, this);
     this->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Canvas::OnScroll, this);
+    this->Bind(wxEVT_SCROLLWIN_TOP, &Canvas::OnScroll, this);
+    this->Bind(wxEVT_SCROLLWIN_BOTTOM, &Canvas::OnScroll, this);
 }
 
 Canvas::~Canvas() 
 {
-
+    m_image.Destroy();
 }
 
 void Canvas::SetImage(wxImage& in)
@@ -41,7 +42,6 @@ void Canvas::SetImage(wxImage& in)
     this->ShowScrollbars(wxSHOW_SB_DEFAULT, wxSHOW_SB_DEFAULT);
 
     this->Refresh();
-    //Update();
 }
 
 void Canvas::OnPaint(wxPaintEvent& event)
@@ -53,7 +53,7 @@ void Canvas::OnPaint(wxPaintEvent& event)
 
 void Canvas::PaintNow()
 {
-    wxPaintDC dc(this);
+    wxClientDC dc(this);
     DoPrepareDC(dc);
     this->OnDraw(dc);
 }
@@ -88,4 +88,3 @@ void Canvas::Sobel()
 {
 
 }
-
