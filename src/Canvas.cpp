@@ -4,8 +4,11 @@
 #include <wx/event.h>
 #include <wx/dcclient.h>
 #include <wx/dcbuffer.h>
+#include <wx/menu.h>
 
 // Ref: https://gist.github.com/PBfordev/45bee180f6cbee6c1948a1a9813a2f27
+
+// Ref: https://github.com/habisoft/ImageViewer
 
 Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
 	: wxScrolledCanvas(parent, ID, pos, size, wxHSCROLL | wxVSCROLL | wxRETAINED | wxFULL_REPAINT_ON_RESIZE)
@@ -19,11 +22,12 @@ Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
 
 Canvas::~Canvas() 
 {
-
+    m_image.Destroy();
 }
 
 bool Canvas::SetImage(wxImage& in)
 {
+    m_image = in;
     m_bitmap = wxBitmap(in);
 
     if (!m_bitmap.IsOk()) {
@@ -32,6 +36,8 @@ bool Canvas::SetImage(wxImage& in)
 
     m_bitmapW = m_bitmap.GetWidth();
     m_bitmapH = m_bitmap.GetHeight();
+
+    m_zoom = 1.f;
 
     // Set scroll bar.
     this->SetVirtualSize(m_bitmapW, m_bitmapH);
@@ -65,30 +71,82 @@ void Canvas::OnSize(wxSizeEvent& event)
     Render(canvasW, canvasH);
 }
 
-void Canvas::Render(const int canvasW, const int canvasH)
+void Canvas::Render(int canvasW, int canvasH)
 {
     wxAutoBufferedPaintDC dc(this);
     dc.Clear();
+    dc.SetUserScale((double)m_zoom, (double)m_zoom);
 
+    // Adjust client size.
+    canvasW = dc.DeviceToLogicalX(canvasW);
+    canvasH = dc.DeviceToLogicalY(canvasH);
+
+   /* this->SetVirtualSize(
+        static_cast<int>(dc.DeviceToLogicalX(m_bitmapW * m_zoom)),
+        static_cast<int>(dc.DeviceToLogicalY(m_bitmapH * m_zoom))
+    );
+    AdjustScrollbars();*/
+
+    this->SetVirtualSize(m_bitmapW, m_bitmapH);
+    AdjustScrollbars();
+
+#if 1
+    this->GetViewStart(&m_currentX, &m_currentY);
+    wxRect roi;
+    wxPoint p(m_currentX * m_scrollUintX, m_currentY * m_scrollUintY);
+    roi.SetTopLeft(p);
+    roi.SetWidth(std::min(canvasW, static_cast<int>(dc.DeviceToLogicalX(m_bitmapW * m_zoom))));
+    roi.SetHeight(std::min(canvasH, static_cast<int>(dc.DeviceToLogicalY(m_bitmapH * m_zoom))));
+    wxBitmap visibleBitmap;
+    visibleBitmap = m_bitmap.GetSubBitmap(roi);
+
+    int centerX = std::max(canvasW / 2 - dc.DeviceToLogicalX(m_bitmapW * m_zoom) / 2, 0);
+    int centerY = std::max(canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2, 0);
+    
+    dc.DrawBitmap(visibleBitmap, centerX, centerY, false);
+
+
+#else
     if (m_bitmapW > canvasW && m_bitmapH > canvasH) {
-        wxRect bitmapVisibleRect;
-        wxBitmap visibleBitmap;
         this->GetViewStart(&m_currentX, &m_currentY);
-        bitmapVisibleRect.SetTopLeft(wxPoint(m_currentX * m_scrollUintX, m_currentY * m_scrollUintY));
-        bitmapVisibleRect.SetWidth(canvasW);
-        bitmapVisibleRect.SetHeight(canvasH);
-        visibleBitmap = m_bitmap.GetSubBitmap(bitmapVisibleRect);
-
-        dc.DrawBitmap(visibleBitmap, 0, 0, true);
+        wxRect roi;
+        wxPoint p(m_currentX * m_scrollUintX, m_currentY * m_scrollUintY);
+        roi.SetTopLeft(p);
+        roi.SetWidth(canvasW);
+        roi.SetHeight(canvasH);
+        wxBitmap visibleBitmap;
+        visibleBitmap = m_bitmap.GetSubBitmap(roi);
+        dc.DrawBitmap(visibleBitmap, 0, 0, false);
     }
     else {
-        int centerX = canvasW / 2 - m_bitmapW / 2;
-        int centerY = canvasH / 2 - m_bitmapH / 2;
+        int centerX = canvasW / 2 - dc.DeviceToLogicalX(m_bitmapW * m_zoom) / 2;
+        int centerY = canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2;
         dc.DrawBitmap(m_bitmap, centerX, centerY, false);
     }
+#endif
+
+    this->Refresh();
+}
+
+void Canvas::OnZoom(wxCommandEvent& event)
+{
+    if (!m_image.IsOk()) return;
+
+    if (event.GetId() == wxID_ZOOM_IN) {
+        m_zoom = (m_zoom + 0.1f > 3.0f) ? 3.0f : (m_zoom + 0.1f);
+    }
+    else if (event.GetId() == wxID_ZOOM_OUT) {
+        m_zoom = (m_zoom - 0.1f < 0.5f) ? 0.5f : (m_zoom - 0.1f);
+    }
+
+    wxClientDC client(this);
+    int canvasW, canvasH;
+    client.GetSize(&canvasW, &canvasH);
+   
+    Render(canvasW, canvasH);
 }
 
 void Canvas::Sobel()
 {
-
+    
 }

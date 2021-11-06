@@ -16,12 +16,16 @@ public:
 	bool SetImage(wxImage& in);
 	void OnPaint(wxPaintEvent& event);
 	void OnSize(wxSizeEvent& event);
+	void OnZoom(wxCommandEvent& event);
 
 	void Sobel();
 
 private:
 	void Render(const int canvasW, const int canvasH);
 
+	float m_zoom = 1.0f;
+
+	wxImage m_image = wxNullImage;
 	wxBitmap m_bitmap = wxNullBitmap;
 	int m_bitmapW;
 	int m_bitmapH;

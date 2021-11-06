@@ -1,14 +1,14 @@
-#include "ToolBarPanel.h"
+#include "ToolBar.h"
 #include "Config.h"
 
-ToolBarPanel::ToolBarPanel(wxWindow* parent, const int ID)
+ToolBar::ToolBar(wxWindow* parent, const int ID)
     : wxPanel(parent, ID, wxDefaultPosition)
 {
     // Set the tool buttons.
     m_sobel = new wxButton(this, SOBEL, "Sobel", wxDefaultPosition, wxDefaultSize, wxBU_EXACTFIT | wxBORDER_NONE);
 
     // Bind event.
-    this->Bind(wxEVT_BUTTON, &ToolBarPanel::Sobel, this, SOBEL);
+    this->Bind(wxEVT_BUTTON, &ToolBar::Sobel, this, SOBEL);
 
     // Set sizer.
     m_sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -20,9 +20,9 @@ ToolBarPanel::ToolBarPanel(wxWindow* parent, const int ID)
     this->SetAutoLayout(true);
 }
 
-ToolBarPanel::~ToolBarPanel() {}
+ToolBar::~ToolBar() {}
 
-void ToolBarPanel::Sobel(wxCommandEvent& event)
+void ToolBar::Sobel(wxCommandEvent& event)
 {
     event.Skip();
 }
