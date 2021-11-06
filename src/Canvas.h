@@ -23,16 +23,15 @@ public:
 private:
 	void Render(const int canvasW, const int canvasH);
 
-	float m_zoom = 1.0f;
-
 	wxImage m_image = wxNullImage;
 	wxBitmap m_bitmap = wxNullBitmap;
-	int m_bitmapW;
-	int m_bitmapH;
-	int m_scrollUintX;
-	int m_scrollUintY;
-	int m_currentX;
-	int m_currentY;
+	float m_zoom = 1.0f;
+	int m_bitmapW = -1;
+	int m_bitmapH = -1;
+	int m_scrollUintX = 0;
+	int m_scrollUintY = 0;
+	int m_currentX = -1;
+	int m_currentY = -1;
 };
 
 #endif

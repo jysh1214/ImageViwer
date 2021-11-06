@@ -7,7 +7,6 @@
 #include <wx/menu.h>
 
 // Ref: https://gist.github.com/PBfordev/45bee180f6cbee6c1948a1a9813a2f27
-
 // Ref: https://github.com/habisoft/ImageViewer
 
 Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
@@ -64,6 +63,8 @@ void Canvas::OnPaint(wxPaintEvent& event)
 
 void Canvas::OnSize(wxSizeEvent& event)
 {
+    if (!m_image.IsOk()) return;
+
     wxClientDC client(this);
     int canvasW, canvasH;
     client.GetSize(&canvasW, &canvasH);
@@ -81,16 +82,6 @@ void Canvas::Render(int canvasW, int canvasH)
     canvasW = dc.DeviceToLogicalX(canvasW);
     canvasH = dc.DeviceToLogicalY(canvasH);
 
-   /* this->SetVirtualSize(
-        static_cast<int>(dc.DeviceToLogicalX(m_bitmapW * m_zoom)),
-        static_cast<int>(dc.DeviceToLogicalY(m_bitmapH * m_zoom))
-    );
-    AdjustScrollbars();*/
-
-    this->SetVirtualSize(m_bitmapW, m_bitmapH);
-    AdjustScrollbars();
-
-#if 1
     this->GetViewStart(&m_currentX, &m_currentY);
     wxRect roi;
     wxPoint p(m_currentX * m_scrollUintX, m_currentY * m_scrollUintY);
@@ -104,26 +95,6 @@ void Canvas::Render(int canvasW, int canvasH)
     int centerY = std::max(canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2, 0);
     
     dc.DrawBitmap(visibleBitmap, centerX, centerY, false);
-
-
-#else
-    if (m_bitmapW > canvasW && m_bitmapH > canvasH) {
-        this->GetViewStart(&m_currentX, &m_currentY);
-        wxRect roi;
-        wxPoint p(m_currentX * m_scrollUintX, m_currentY * m_scrollUintY);
-        roi.SetTopLeft(p);
-        roi.SetWidth(canvasW);
-        roi.SetHeight(canvasH);
-        wxBitmap visibleBitmap;
-        visibleBitmap = m_bitmap.GetSubBitmap(roi);
-        dc.DrawBitmap(visibleBitmap, 0, 0, false);
-    }
-    else {
-        int centerX = canvasW / 2 - dc.DeviceToLogicalX(m_bitmapW * m_zoom) / 2;
-        int centerY = canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2;
-        dc.DrawBitmap(m_bitmap, centerX, centerY, false);
-    }
-#endif
 
     this->Refresh();
 }
@@ -139,11 +110,18 @@ void Canvas::OnZoom(wxCommandEvent& event)
         m_zoom = (m_zoom - 0.1f < 0.5f) ? 0.5f : (m_zoom - 0.1f);
     }
 
+    // Reset scroll rate.
+    m_scrollUintX = m_bitmapW / 100 / m_zoom;
+    m_scrollUintY = m_bitmapH / 100 / m_zoom;
+    this->SetScrollRate(m_scrollUintX, m_scrollUintY);
+    
     wxClientDC client(this);
     int canvasW, canvasH;
     client.GetSize(&canvasW, &canvasH);
    
     Render(canvasW, canvasH);
+    this->Refresh();
+    Update();
 }
 
 void Canvas::Sobel()
