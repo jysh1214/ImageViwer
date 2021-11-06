@@ -8,14 +8,14 @@
 class ToolBar: public wxPanel
 {
 public:
-	ToolBar(wxWindow* parent, const int ID);
-	virtual ~ToolBar();
+    ToolBar(wxWindow* parent, const int ID);
+    virtual ~ToolBar();
 
-	void Sobel(wxCommandEvent& event);
+    void Sobel(wxCommandEvent& event);
 
 private:
-	wxBoxSizer* m_sizer = nullptr;
-	wxButton* m_sobel = nullptr;
+    wxBoxSizer* m_sizer = nullptr;
+    wxButton* m_sobel = nullptr;
 };
 
 #endif

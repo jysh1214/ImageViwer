@@ -9,17 +9,17 @@
 class MenuBar: public wxMenuBar
 {
 public:
-	MenuBar();
-	virtual ~MenuBar();
+    MenuBar();
+    virtual ~MenuBar();
 
-	void OnOpenFile(wxCommandEvent& event);
-	void OnQuit(wxCommandEvent& event);
+    void OnOpenFile(wxCommandEvent& event);
+    void OnQuit(wxCommandEvent& event);
 
-	void OnZoom(wxCommandEvent& event);
+    void OnZoom(wxCommandEvent& event);
 
 private:
-	wxMenu* m_fileMenu = nullptr;
-	wxMenu* m_viewMenu = nullptr;
+    wxMenu* m_fileMenu = nullptr;
+    wxMenu* m_viewMenu = nullptr;
 };
 
 #endif

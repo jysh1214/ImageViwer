@@ -10,28 +10,28 @@
 class Canvas: public wxScrolledCanvas
 {
 public:
-	Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size);
-	virtual ~Canvas();
+    Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size);
+    virtual ~Canvas();
 
-	bool SetImage(wxImage& in);
-	void OnPaint(wxPaintEvent& event);
-	void OnSize(wxSizeEvent& event);
-	void OnZoom(wxCommandEvent& event);
+    bool SetImage(wxImage& in);
+    void OnPaint(wxPaintEvent& event);
+    void OnSize(wxSizeEvent& event);
+    void OnZoom(wxCommandEvent& event);
 
-	void Sobel();
+    void Sobel();
 
 private:
-	void Render(const int canvasW, const int canvasH);
+    void Render(const int canvasW, const int canvasH);
 
-	wxImage m_image = wxNullImage;
-	wxBitmap m_bitmap = wxNullBitmap;
-	float m_zoom = 1.0f;
-	int m_bitmapW = -1;
-	int m_bitmapH = -1;
-	int m_scrollUintX = 0;
-	int m_scrollUintY = 0;
-	int m_currentX = -1;
-	int m_currentY = -1;
+    wxImage m_image = wxNullImage;
+    wxBitmap m_bitmap = wxNullBitmap;
+    float m_zoom = 1.0f;
+    int m_bitmapW = -1;
+    int m_bitmapH = -1;
+    int m_scrollUintX = 0;
+    int m_scrollUintY = 0;
+    int m_currentX = -1;
+    int m_currentY = -1;
 };
 
 #endif

@@ -10,7 +10,7 @@
 // Ref: https://github.com/habisoft/ImageViewer
 
 Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
-	: wxScrolledCanvas(parent, ID, pos, size, wxHSCROLL | wxVSCROLL | wxRETAINED | wxFULL_REPAINT_ON_RESIZE)
+    : wxScrolledCanvas(parent, ID, pos, size, wxHSCROLL | wxVSCROLL | wxRETAINED | wxFULL_REPAINT_ON_RESIZE)
 {
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
@@ -84,8 +84,11 @@ void Canvas::Render(int canvasW, int canvasH)
 
     this->GetViewStart(&m_currentX, &m_currentY);
     wxRect roi;
-    wxPoint p(m_currentX * m_scrollUintX, m_currentY * m_scrollUintY);
-    roi.SetTopLeft(p);
+    wxPoint currentPosition(
+        dc.DeviceToLogicalX(m_currentX * m_scrollUintX), 
+        dc.DeviceToLogicalY(m_currentY * m_scrollUintY)
+    );
+    roi.SetTopLeft(currentPosition);
     roi.SetWidth(std::min(canvasW, static_cast<int>(dc.DeviceToLogicalX(m_bitmapW * m_zoom))));
     roi.SetHeight(std::min(canvasH, static_cast<int>(dc.DeviceToLogicalY(m_bitmapH * m_zoom))));
     wxBitmap visibleBitmap;
@@ -94,7 +97,7 @@ void Canvas::Render(int canvasW, int canvasH)
     int centerX = std::max(canvasW / 2 - dc.DeviceToLogicalX(m_bitmapW * m_zoom) / 2, 0);
     int centerY = std::max(canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2, 0);
     
-    dc.DrawBitmap(visibleBitmap, centerX, centerY, false);
+    dc.DrawBitmap(visibleBitmap, centerX, centerY, true);
 
     this->Refresh();
 }
@@ -111,9 +114,10 @@ void Canvas::OnZoom(wxCommandEvent& event)
     }
 
     // Reset scroll rate.
-    m_scrollUintX = m_bitmapW / 100 / m_zoom;
-    m_scrollUintY = m_bitmapH / 100 / m_zoom;
-    this->SetScrollRate(m_scrollUintX, m_scrollUintY);
+    this->SetVirtualSize(
+        floorf(m_bitmapW * m_zoom - m_scrollUintX), 
+        floorf(m_bitmapH * m_zoom - m_scrollUintY)
+    );
     
     wxClientDC client(this);
     int canvasW, canvasH;
