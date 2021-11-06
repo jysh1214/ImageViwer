@@ -13,19 +13,18 @@ public:
 	Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size);
 	virtual ~Canvas();
 
-	void SetImage(wxImage& in);
+	bool SetImage(wxImage& in);
 	void OnPaint(wxPaintEvent& event);
-	void PaintNow();
-	void OnDraw(wxDC& dc);
 	void OnSize(wxSizeEvent& event);
-	void OnScroll(wxScrollWinEvent& event);
 
 	void Sobel();
 
 private:
-	wxImage m_image;
-	int m_imageW;
-	int m_imageH;
+	void Render(const int canvasW, const int canvasH);
+
+	wxBitmap m_bitmap = wxNullBitmap;
+	int m_bitmapW;
+	int m_bitmapH;
 	int m_scrollUintX;
 	int m_scrollUintY;
 	int m_currentX;

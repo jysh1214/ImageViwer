@@ -6,11 +6,9 @@
 
 #include "MainFrame.h"
 
-// Ref: https://zetcode.com/gui/wxwidgets/layoutmanagement/
-
 namespace
 {
-    static wxString supportImageRegex = "Image files.(*.bmp,*.jpg,*.png)|*.bmp;*.jpg;*.png";
+    static wxString supportImageRegex = "Image files.(*.jpg;*.png;*.tga;*.bmp;*.tiff;*.gif;*.ico;*.pcx)| *.jpg;*.png;*.tga;*.bmp;*.tiff;*.gif;*.ico;*.pcx";
 }
 
 MainFrame::MainFrame(const wxString title, const int ID)
@@ -54,7 +52,7 @@ void MainFrame::OnOpenFile(wxCommandEvent& event)
     }
 
     wxImage in(openFileDialog.GetPath());
-    this->SetImage(in);
+    m_canvas->SetImage(in);
 }
 
 void MainFrame::OnQuit(wxCommandEvent& event)
@@ -65,11 +63,6 @@ void MainFrame::OnQuit(wxCommandEvent& event)
 void MainFrame::OnClose(wxCloseEvent& event)
 {
     this->Close(true);
-}
-
-void MainFrame::SetImage(wxImage& in)
-{
-    m_canvas->SetImage(in);
 }
 
 void MainFrame::Sobel(wxCommandEvent& event)

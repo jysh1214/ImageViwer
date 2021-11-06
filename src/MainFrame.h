@@ -17,7 +17,6 @@ public:
     void OnQuit(wxCommandEvent& event);
     void OnClose(wxCloseEvent& event);
 
-    void SetImage(wxImage& in);
     void Sobel(wxCommandEvent& event);
 
 private:
