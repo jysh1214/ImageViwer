@@ -115,6 +115,7 @@ void Canvas::OnZoom(wxCommandEvent& event)
 
     // Reset scroll rate.
     this->SetVirtualSize(
+        // 若滑到底部，roi面積為零，不會顯示任何東西，所以各保留一個單位的距離
         floorf(m_bitmapW * m_zoom - m_scrollUintX), 
         floorf(m_bitmapH * m_zoom - m_scrollUintY)
     );
