@@ -113,17 +113,16 @@ void Canvas::OnZoom(wxCommandEvent& event)
         m_zoom = (m_zoom - 0.1f < 0.5f) ? 0.5f : (m_zoom - 0.1f);
     }
 
-    // Reset scroll rate.
-    this->SetVirtualSize(
-        // 若滑到底部，roi面積為零，不會顯示任何東西，所以各保留一個單位的距離
-        floorf(m_bitmapW * m_zoom - m_scrollUintX), 
-        floorf(m_bitmapH * m_zoom - m_scrollUintY)
-    );
-    
     wxClientDC client(this);
     int canvasW, canvasH;
     client.GetSize(&canvasW, &canvasH);
-   
+
+    // Reset scroll rate.
+    this->SetVirtualSize(
+        floorf((m_bitmapW - canvasW) * m_zoom),
+        floorf((m_bitmapH - canvasH) * m_zoom)
+    );
+    
     Render(canvasW, canvasH);
     this->Refresh();
     Update();
