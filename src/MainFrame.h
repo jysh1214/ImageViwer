@@ -18,12 +18,17 @@ public:
     void OnClose(wxCloseEvent& event);
     void OnZoom(wxCommandEvent& event);
 
+    void OnMouseWheel(wxMouseEvent& event);
+    //void OmKey
+
     void Sobel(wxCommandEvent& event);
 
 private:
     MenuBar* m_menuBar = nullptr;
     ToolBar* m_toolBar = nullptr;
     Canvas* m_canvas = nullptr;
+
+    int m_wheelRotation = 0;
 };
 
 #endif

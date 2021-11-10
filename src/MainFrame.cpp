@@ -78,6 +78,11 @@ void MainFrame::OnClose(wxCloseEvent& event)
     this->Destroy();
 }
 
+void MainFrame::OnMouseWheel(wxMouseEvent& event)
+{
+    m_wheelRotation = event.GetWheelRotation();
+}
+
 void MainFrame::Sobel(wxCommandEvent& event)
 {
     m_canvas->Sobel();

@@ -1,6 +1,7 @@
 #include "Canvas.h"
 #include "Config.h"
 
+#include <algorithm>
 #include <wx/event.h>
 #include <wx/dcclient.h>
 #include <wx/dcbuffer.h>
@@ -94,8 +95,8 @@ void Canvas::Render(int canvasW, int canvasH)
     wxBitmap visibleBitmap;
     visibleBitmap = m_bitmap.GetSubBitmap(roi);
 
-    int centerX = std::max(canvasW / 2 - dc.DeviceToLogicalX(m_bitmapW * m_zoom) / 2, 0);
-    int centerY = std::max(canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2, 0);
+    int centerX = std::max(0, canvasW / 2 - dc.DeviceToLogicalX(m_bitmapW * m_zoom) / 2);
+    int centerY = std::max(0, canvasH / 2 - dc.DeviceToLogicalY(m_bitmapH * m_zoom) / 2);
     
     dc.DrawBitmap(visibleBitmap, centerX, centerY, true);
 
@@ -107,25 +108,25 @@ void Canvas::OnZoom(wxCommandEvent& event)
     if (!m_image.IsOk()) return;
 
     if (event.GetId() == wxID_ZOOM_IN) {
-        m_zoom = (m_zoom + 0.1f > 3.0f) ? 3.0f : (m_zoom + 0.1f);
+        m_zoom = (m_zoom + 0.1f > 10.0f) ? 10.0f : (m_zoom + 0.1f);
     }
     else if (event.GetId() == wxID_ZOOM_OUT) {
-        m_zoom = (m_zoom - 0.1f < 0.5f) ? 0.5f : (m_zoom - 0.1f);
+        m_zoom = (m_zoom - 0.1f < 0.1f) ? 0.1f : (m_zoom - 0.1f);
     }
 
     wxClientDC client(this);
     int canvasW, canvasH;
     client.GetSize(&canvasW, &canvasH);
 
+    int virtualX = static_cast<int>(floorf(m_bitmapW * m_zoom) - ceil(2 * m_scrollUintX * m_zoom));
+    int virtualY = static_cast<int>(floorf(m_bitmapH * m_zoom) - ceil(2 * m_scrollUintY * m_zoom));
+
     // Reset scroll rate.
-    this->SetVirtualSize(
-        floorf((m_bitmapW - canvasW) * m_zoom),
-        floorf((m_bitmapH - canvasH) * m_zoom)
-    );
+    this->SetVirtualSize(virtualX, virtualY);
     
     Render(canvasW, canvasH);
-    this->Refresh();
-    Update();
+    //this->Refresh();
+    //this->Update();
 }
 
 void Canvas::Sobel()
