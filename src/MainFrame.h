@@ -14,13 +14,14 @@ public:
     virtual ~MainFrame();
 
     void OnOpenFile(wxCommandEvent& event);
+    void OnSaveFile(wxCommandEvent& event);
     void OnQuit(wxCommandEvent& event);
     void OnClose(wxCloseEvent& event);
     void OnZoom(wxCommandEvent& event);
 
     void OnMouseWheel(wxMouseEvent& event);
-    //void OmKey
 
+    wxImage GetImage() const;
     void Sobel(wxCommandEvent& event);
 
 private:

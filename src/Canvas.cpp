@@ -13,11 +13,11 @@
 Canvas::Canvas(wxWindow* parent, const int ID, wxPoint pos, wxSize size)
     : wxScrolledCanvas(parent, ID, pos, size, wxHSCROLL | wxVSCROLL | wxRETAINED | wxFULL_REPAINT_ON_RESIZE)
 {
-    this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+    SetBackgroundStyle(wxBG_STYLE_PAINT);
 
     // Bind event.
-    this->Bind(wxEVT_PAINT, &Canvas::OnPaint, this);
-    this->Bind(wxEVT_SIZE, &Canvas::OnSize, this);
+    Bind(wxEVT_PAINT, &Canvas::OnPaint, this);
+    Bind(wxEVT_SIZE, &Canvas::OnSize, this);
 }
 
 Canvas::~Canvas() 
@@ -40,17 +40,22 @@ bool Canvas::SetImage(wxImage& in)
     m_zoom = 1.f;
 
     // Set scroll bar.
-    this->SetVirtualSize(m_bitmapW, m_bitmapH);
-    this->SetScrollbars(m_bitmapW / 100, m_bitmapH / 100, 100, 100);
+    SetVirtualSize(m_bitmapW, m_bitmapH);
+    SetScrollbars(m_bitmapW / 100, m_bitmapH / 100, 100, 100);
     m_scrollUintX = m_bitmapW / 100;
     m_scrollUintY = m_bitmapH / 100;
-    this->ShowScrollbars(wxSHOW_SB_DEFAULT, wxSHOW_SB_DEFAULT);
-    this->EnableScrolling(true, true);
+    ShowScrollbars(wxSHOW_SB_DEFAULT, wxSHOW_SB_DEFAULT);
+    EnableScrolling(true, true);
 
-    this->Refresh();
-    this->Update();
+    Refresh();
+    Update();
 
     return true;
+}
+
+wxImage Canvas::GetImage() const
+{
+    return m_bitmap.ConvertToImage();
 }
 
 void Canvas::OnPaint(wxPaintEvent& event)
@@ -83,7 +88,7 @@ void Canvas::Render(int canvasW, int canvasH)
     canvasW = dc.DeviceToLogicalX(canvasW);
     canvasH = dc.DeviceToLogicalY(canvasH);
 
-    this->GetViewStart(&m_currentX, &m_currentY);
+    GetViewStart(&m_currentX, &m_currentY);
     wxRect roi;
     wxPoint currentPosition(
         dc.DeviceToLogicalX(m_currentX * m_scrollUintX), 
@@ -100,7 +105,7 @@ void Canvas::Render(int canvasW, int canvasH)
     
     dc.DrawBitmap(visibleBitmap, centerX, centerY, true);
 
-    this->Refresh();
+    Refresh();
 }
 
 void Canvas::OnZoom(wxCommandEvent& event)
@@ -118,15 +123,13 @@ void Canvas::OnZoom(wxCommandEvent& event)
     int canvasW, canvasH;
     client.GetSize(&canvasW, &canvasH);
 
-    int virtualX = static_cast<int>(floorf(m_bitmapW * m_zoom) - ceil(2 * m_scrollUintX * m_zoom));
-    int virtualY = static_cast<int>(floorf(m_bitmapH * m_zoom) - ceil(2 * m_scrollUintY * m_zoom));
-
     // Reset scroll rate.
-    this->SetVirtualSize(virtualX, virtualY);
+    int virtualSizeX = static_cast<int>(floorf(m_bitmapW * m_zoom) - ceil(2 * m_scrollUintX * m_zoom));
+    int virtualSizeY = static_cast<int>(floorf(m_bitmapH * m_zoom) - ceil(2 * m_scrollUintY * m_zoom));
+
+    this->SetVirtualSize(virtualSizeX, virtualSizeY);
     
     Render(canvasW, canvasH);
-    //this->Refresh();
-    //this->Update();
 }
 
 void Canvas::Sobel()

@@ -13,6 +13,7 @@ public:
     virtual ~MenuBar();
 
     void OnOpenFile(wxCommandEvent& event);
+    void OnSaveFile(wxCommandEvent& event);
     void OnQuit(wxCommandEvent& event);
 
     void OnZoom(wxCommandEvent& event);

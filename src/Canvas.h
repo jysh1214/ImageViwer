@@ -14,9 +14,11 @@ public:
     virtual ~Canvas();
 
     bool SetImage(wxImage& in);
+    wxImage GetImage() const;
     void OnPaint(wxPaintEvent& event);
     void OnSize(wxSizeEvent& event);
     void OnZoom(wxCommandEvent& event);
+    
 
     void Sobel();
 

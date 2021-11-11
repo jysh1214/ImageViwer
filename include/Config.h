@@ -8,6 +8,7 @@ enum
     TOOL_BAR,
     CANVAS,
     OPEN_FILE,
+    SAVE_FILE,
     RENDER,
     SCROLL,
     // TOOL
