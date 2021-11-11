@@ -18,7 +18,7 @@ public:
     void OnPaint(wxPaintEvent& event);
     void OnSize(wxSizeEvent& event);
     void OnZoom(wxCommandEvent& event);
-    
+    void OnTool(wxCommandEvent& event);
 
     void Sobel();
 

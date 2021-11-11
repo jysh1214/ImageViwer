@@ -11,21 +11,24 @@ SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+IF(MSVC)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /arch:AVX2")
+ENDIF()
+
+# Use vcpkg.
+IF(MSVC)
+    INCLUDE("C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
+    # Use windows application instead of console one.
+    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
+ENDIF()
+
+# Find wxWidgets from vcpkg.
+FIND_PACKAGE(wxWidgets REQUIRED)
+INCLUDE(${wxWidgets_USE_FILE})
+
 # Find threads.
 SET(CMAKE_THREAD_PREFER_PTHREAD ON)
 FIND_PACKAGE(Threads REQUIRED)
-
-# Find wxWidgets.
-IF(MSVC)
-    # Use vcpkg.
-    INCLUDE("C:/vcpkg/scripts/buildsystems/vcpkg.cmake")
-    # Choose windows application instead of console one.
-    SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
-    
-ENDIF()
-
-FIND_PACKAGE(wxWidgets REQUIRED)
-INCLUDE(${wxWidgets_USE_FILE})
 
 # Find OpenCv.
 FIND_PACKAGE(OpenCV REQUIRED)

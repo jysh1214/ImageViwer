@@ -167,8 +167,8 @@ wxImage MainFrame::GetImage() const
     return m_canvas->GetImage();
 }
 
-void MainFrame::Sobel(wxCommandEvent& event)
+void MainFrame::OnTool(wxCommandEvent& event)
 {
-    m_canvas->Sobel();
+    m_canvas->OnTool(event);
 }
 

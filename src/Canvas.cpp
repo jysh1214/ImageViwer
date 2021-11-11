@@ -1,5 +1,6 @@
 #include "Canvas.h"
 #include "Config.h"
+#include "Sobel.h"
 
 #include <algorithm>
 #include <wx/event.h>
@@ -34,10 +35,9 @@ bool Canvas::SetImage(wxImage& in)
         return false;
     }
 
+    m_zoom = 1.f;
     m_bitmapW = m_bitmap.GetWidth();
     m_bitmapH = m_bitmap.GetHeight();
-
-    m_zoom = 1.f;
 
     // Set scroll bar.
     SetVirtualSize(m_bitmapW, m_bitmapH);
@@ -130,6 +130,15 @@ void Canvas::OnZoom(wxCommandEvent& event)
     this->SetVirtualSize(virtualSizeX, virtualSizeY);
     
     Render(canvasW, canvasH);
+}
+
+void OnTool(wxCommandEvent& event)
+{
+    switch (event.GetId()) {
+    case SOBEL:
+        m_image = Sobel(m_image->GetImage());
+        break;
+    }
 }
 
 void Canvas::Sobel()

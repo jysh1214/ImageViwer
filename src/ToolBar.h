@@ -11,6 +11,7 @@ public:
     ToolBar(wxWindow* parent, const int ID);
     virtual ~ToolBar();
 
+    void OnTool(wxCommandEvent& event);
     void Sobel(wxCommandEvent& event);
 
 private:

@@ -26,3 +26,8 @@ void ToolBar::Sobel(wxCommandEvent& event)
 {
     event.Skip();
 }
+
+void ToolBar::OnTool(wxCommandEvent& event)
+{
+    event.Skip();
+}

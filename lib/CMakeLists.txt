@@ -1,0 +1,11 @@
+SET(SRCS Sobel.cpp)
+
+SET(HEADERS ImageType.h 
+    Sobel.h)
+
+SET(INCS ${OpenCV_INCLUDE_DIRS})
+SET(LIBS ${OpenCV_LIBS})
+
+INCLUDE_DIRECTORIES(${INCS})
+ADD_LIBRARY(cvtools ${SRCS} ${HEADERS})
+TARGET_LINK_LIBRARIES(cvtools ${LIBS})

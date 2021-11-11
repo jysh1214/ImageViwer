@@ -22,7 +22,7 @@ public:
     void OnMouseWheel(wxMouseEvent& event);
 
     wxImage GetImage() const;
-    void Sobel(wxCommandEvent& event);
+    void OnTool(wxCommandEvent& event);
 
 private:
     MenuBar* m_menuBar = nullptr;
