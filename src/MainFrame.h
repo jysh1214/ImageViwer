@@ -15,11 +15,11 @@ public:
 
     void OnOpenFile(wxCommandEvent& event);
     void OnSaveFile(wxCommandEvent& event);
+    void OnZoom(wxCommandEvent& event);
+    void OnMouseWheel(wxMouseEvent& event);
+
     void OnQuit(wxCommandEvent& event);
     void OnClose(wxCloseEvent& event);
-    void OnZoom(wxCommandEvent& event);
-
-    void OnMouseWheel(wxMouseEvent& event);
 
     wxImage GetImage() const;
     void OnTool(wxCommandEvent& event);

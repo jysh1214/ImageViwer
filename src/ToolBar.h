@@ -12,7 +12,6 @@ public:
     virtual ~ToolBar();
 
     void OnTool(wxCommandEvent& event);
-    void Sobel(wxCommandEvent& event);
 
 private:
     wxBoxSizer* m_sizer = nullptr;

@@ -2,7 +2,6 @@
 
 #include "Config.h"
 #include "ImageViwer.h"
-#include "MainFrame.h"
 
 wxIMPLEMENT_APP(ImageViwer);
 

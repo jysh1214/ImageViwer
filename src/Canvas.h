@@ -20,10 +20,9 @@ public:
     void OnZoom(wxCommandEvent& event);
     void OnTool(wxCommandEvent& event);
 
-    void Sobel();
-
 private:
     void Render(const int canvasW, const int canvasH);
+    void ResetVirtualSize();
 
     wxImage m_image = wxNullImage;
     wxBitmap m_bitmap = wxNullBitmap;

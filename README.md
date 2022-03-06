@@ -1,19 +1,33 @@
 # Image Viwer
 
-## Dependency
-- CMake
-- wxWidgets
+## Windows
 
-## Enviroment Setup
-
-### MS Windows
+### Requirements
 - [CMake](https://cmake.org/)
+- [vcpkg]()
 - [wxWidgets](https://wxwidgets.org/blog/2019/01/wxwidgets-and-vcpkg/)
+- [Visual Studio 2019]()
 
-### Linux
+### Build(with CMake)
+```
+cmake `
+    -G "Visual Studio 16 2019" `
+    -A x64 `
+    -D CMAKE_TOOLCHAIN_FILE=path/to/vcpkg/scripts/buildsystems/vcpkg.cmake `
+    ..
+```
 
-### MacOs
+## Linux
 
-### Reference
+### Requirements
+- [CMake](https://cmake.org/)
+- [wxWidgets]()
 
-- Layout: https://www.cnblogs.com/tinyms/archive/2010/05/18/wxWidgets_wxBoxSizer.html
+
+### Use
+```
+D:\CMake\bin\cmake.exe `
+    -D 
+    -D CMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+    ..
+```

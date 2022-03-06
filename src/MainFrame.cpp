@@ -114,7 +114,7 @@ void MainFrame::OnOpenFile(wxCommandEvent& event)
 
     wxImage in(openFileDialog.GetPath());
     m_canvas->SetImage(in);
-    SetStatusText(wxT("Current Path: " + openFileDialog.GetPath()), 0);
+    SetStatusText(openFileDialog.GetPath(), 0);
 }
 
 void MainFrame::OnSaveFile(wxCommandEvent& event)
@@ -134,6 +134,16 @@ void MainFrame::OnSaveFile(wxCommandEvent& event)
     }
 }
 
+void MainFrame::OnZoom(wxCommandEvent& event)
+{
+    m_canvas->OnZoom(event);
+}
+
+void MainFrame::OnMouseWheel(wxMouseEvent& event)
+{
+    m_wheelRotation = event.GetWheelRotation();
+}
+
 void MainFrame::OnQuit(wxCommandEvent& event)
 {
     m_canvas->Close(true);
@@ -143,11 +153,6 @@ void MainFrame::OnQuit(wxCommandEvent& event)
     this->Destroy();
 }
 
-void MainFrame::OnZoom(wxCommandEvent& event)
-{
-    m_canvas->OnZoom(event);
-}
-
 void MainFrame::OnClose(wxCloseEvent& event)
 {
     m_canvas->Close(true);
@@ -155,11 +160,8 @@ void MainFrame::OnClose(wxCloseEvent& event)
 
     this->Close(true);
     this->Destroy();
-}
 
-void MainFrame::OnMouseWheel(wxMouseEvent& event)
-{
-    m_wheelRotation = event.GetWheelRotation();
+    event.Skip();
 }
 
 wxImage MainFrame::GetImage() const
